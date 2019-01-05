@@ -27,7 +27,7 @@ Route::get('world2','Test\TestController@world2');
 
 //路由参数
 Route::get('/user/test','User\UserController@test');
-Route::get('/user/{uid}','User\UserController@user');
+//Route::get('/user/{uid}','User\UserController@user');
 Route::get('/month/{m}/date/{d}','Test\TestController@md');
 Route::get('/name/{str?}','Test\TestController@showName');
 
@@ -37,9 +37,9 @@ Route::get('/name/{str?}','Test\TestController@showName');
 Route::view('/mvc','mvc');
 Route::view('/error','error',['code'=>40300]);
 
-Route::get('/',function(){
-    echo date('Y-m-d H:i:s');
-});
+//Route::get('/',function(){
+//    echo date('Y-m-d H:i:s');
+//});
 
 // Query Builder
 Route::get('/query/get','Test\TestController@query1');
@@ -49,7 +49,25 @@ Route::get('/query/where','Test\TestController@query2');
 //Route::match(['get','post'],'/test/abc','Test\TestController@abc');
 Route::any('/test/abc','Test\TestController@abc');
 
+//用户注册
+Route::get('/reg','User\UserController@reg');
+Route::post('/reg','User\UserController@doReg');
 
-Route::any('/user/abc','User\UserController@bcd');
-Route::get('/user/add','User\UserController@add');
-Route::get('/view/test','User\UserController@showlist');
+//用户登录
+Route::get('/login','User\UserController@login');
+Route::post('/login','User\UserController@doLogin');
+Route::get('/users/list','User\UserController@list');
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -44,4 +44,87 @@ class UserController extends Controller
 
 		return view('test.child',$data);
 	}
+	public function reg(){
+		return view('users.reg');
+	}
+	public function doReg(Request $request){
+		$name=$request->input('name');
+		$pwd=password_hash($request->input('pwd'),PASSWORD_BCRYPT);
+		$pwd2=password_verify($request->input('pwd2'),$pwd);
+		$where=[
+				'name'=>$name
+		];
+		$info=UserModel::where($where)->get()->toArray();
+		if(!empty($info)){
+			die('User registered');
+
+		}else if($pwd2===false){
+			die('Confirm that the password must match the password');
+		}else{
+			$data=[
+					'name' =>$name,
+					'pwd' =>$pwd,
+					'age' =>$request->input('age'),
+					'email' =>$request->input('email'),
+					'reg_time'=>time(),
+			];
+			$uid=UserModel::insertGetId($data);
+			if($uid){
+				setcookie('uid',$uid,time()+86400,'/','shop.lening.com',false,true);
+				echo 'Registered successfully';
+				header('refresh:1;/login');
+			}else{
+				echo 'Registration failed';
+				header('refresh:0.2;/reg');
+			}
+		}
+
+	}
+	public function login(){
+		return view('users.login');
+	}
+	public function doLogin(Request $request){
+		$name =$request->input('name');
+		$pwd=$request->input('pwd');
+		$data=[
+			'name'=>$name
+		];
+		$info=UserModel::where($data)->first();
+		$pwd2=password_verify($pwd,$info->pwd);
+		if(empty($info)){
+			echo 'Login failed';
+		}else if($pwd2===false){
+			echo 'Wrong account or password';
+		}else {
+			$token = substr(md5(time().mt_rand(1,99999)),10,10);
+			setcookie('uid',$info->uid,time()+86400,'/','',false,true);
+			setcookie('token',$token,time()+86400,'/','',false,true);
+
+			$request->session()->put('u_token',$token);
+			echo 'Login successful';
+			header('refresh:0.2;/users/list');
+		}
+			//header('refresh:0.2;/users/reg');
+		}
+	public function list(Request $request){
+		$token=$_COOKIE['token'];
+		$uid=$_COOKIE['uid'];
+		if($token != $request->session()->get('u_token')){
+			header('refresh:1;/login');
+			echo 'Please log in';
+		}else{
+			$where=[
+				'uid'=>$uid
+			];
+			$info=UserModel::where($where)->first();
+			$list=UserModel::all();
+			$data=[
+				'list' => $list,
+				'name' => $info->name
+			];
+			return view('users.list',$data);
+		}
+
+	}
+
 }
