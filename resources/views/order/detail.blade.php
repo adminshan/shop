@@ -1,18 +1,65 @@
-@extends('layouts.bst')
+@extends('layouts.bootstrap')
 @section('content')
 
     <h1 align="center" style="color:red;">Welcome back </h1>
-    <table class="table table-striped">
-
-
-            <tr>订单号:{{$list->order_sn}}</tr>
-            <tr>名称:{{$goods->goods_name}}</tr>
-            <tr>单价:{{$goods->price}}</tr>
-            <tr>数量:{{$list->order_num}}</tr>
-            <tr>总计:{{$list->order_amount / 100}}</tr>
-            <tr>时间:{{date("Y-m-d H:i:s",$list ->add_time)}}</tr>
-            <tr>操作:<a href="/order/pay/{{$list->goods_id}}">支付</a></tr>
-
+    <table class="table table-bordered">
+        <tr>
+            <td>订单号</td>
+            <td>{{$list->order_sn}}</td>
+        </tr>
+        <tr>
+            <td>名称</td>
+            <td>{{$list->goods_name}}</td>
+        </tr>
+        <tr>
+            <td>单价</td>
+            <td>{{$list->price / 100}}</td>
+        </tr>
+        <tr>
+            <td>数量</td>
+            <td>{{$list->order_num}}</td>
+        </tr>
+        <tr>
+            <td>总计</td>
+            <td>{{$list->order_amount / 100}}</td>
+        </tr>
+        <tr>
+            <td>时间</td>
+            <td>{{date("Y-m-d H:i:s",$list ->add_time)}}</td>
+        </tr>
+        <tr>
+            <td>操作</td>
+            <td>
+                <button class="btn btn-danger"><a href="/order/pay/{{$list->order_sn}}" style="text-decoration: none; color: #ffffff;">去付款</a></button>
+                <button class="btn btn-danger"><a href="/order/list" style="text-decoration: none; color: #ffffff;">返回</a></button>
+            </td>
+        </tr>
 
     </table>
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
