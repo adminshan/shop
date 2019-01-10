@@ -68,6 +68,8 @@ Route::get('/goods/index/{goods_id}','Goods\IndexController@index')->middleware(
 Route::get('/goods/list','Goods\IndexController@list');
 //提交订单
 Route::any('/order/add/{id}','Order\IndexController@add')->middleware('check.login');
+Route::any('/order/list','Order\IndexController@list')->middleware('check.login');
+Route::any('/order/detail/{order_id}','Order\IndexController@detail')->middleware('check.login');
 //退出
 Route::get('/users/quit','User\UserController@quit');
 Route::get('/aazz','User\UserController@aazz');

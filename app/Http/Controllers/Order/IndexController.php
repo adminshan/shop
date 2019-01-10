@@ -28,6 +28,7 @@ class indexController extends Controller
             'order_sn'=>$order_sn,
             'goods_id'=>$goods_info->goods_id,
             'uid'=>session('uid'),
+            'order_num'=>$cart_goods->num,
             'add_time'=>time(),
             'order_amount'=>$orde_amount
         ];
@@ -36,10 +37,25 @@ class indexController extends Controller
             echo '下单成功,订单号：'.$order_sn .' 跳转支付';
             CartModel::where(['id'=>$id])->delete();
             GoodsModel::where(['goods_id'=>$goods_info->goods_id])->update($update);
-            header("refresh:2;/cart/list");
+            header("refresh:2;/order/list");
         }else{
             echo '下单失败';
         }
     }
-
+    public function list(){
+        $list=OrderModel::all();
+        $data=[
+            'list'=>$list
+        ];
+        return view("order.list",$data);
+    }
+    public function detail($order_id){
+        $list=OrderModel::where(['order_id'=>$order_id])->first();
+        $goods=GoodsModel::where(['goods_id'=>$list->goods_id])->first();
+        $data=[
+            'list'=>$list,
+            'goods'=>$goods
+        ];
+        return view('order.detail',$data);
+    }
 }

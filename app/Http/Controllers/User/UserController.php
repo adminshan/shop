@@ -105,7 +105,7 @@ class UserController extends Controller
 			echo 'Login successful';
 			header('refresh:0.2;/goods/list');
 		}
-			//header('refresh:0.2;/users/reg');
+
 		}
 	public function list(Request $request){
 		if(empty(setcookie('token'))){
