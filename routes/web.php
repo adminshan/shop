@@ -57,7 +57,22 @@ Route::post('/reg','User\UserController@doReg');
 Route::get('/login','User\UserController@login');
 Route::post('/login','User\UserController@doLogin');
 Route::get('/users/list','User\UserController@list');
+//购物车
+Route::get('/cart/list','Cart\IndexController@index')->middleware('check.login');
+Route::get('/users/add/{goods_id}','Cart\IndexController@add')->middleware('check.login');
+Route::any('/cart/del/{id}','Cart\IndexController@del')->middleware('check.login');
+Route::post('/cart/add2','Cart\IndexController@add2')->middleware('check.login');
 
+//商品
+Route::get('/goods/index/{goods_id}','Goods\IndexController@index')->middleware('check.login');
+Route::get('/goods/list','Goods\IndexController@list');
+//提交订单
+Route::any('/order/add/{id}','Order\IndexController@add')->middleware('check.login');
+//退出
+Route::get('/users/quit','User\UserController@quit');
+Route::get('/aazz','User\UserController@aazz');
+//Test
+Route::get('/test/checkcookie','Test\TestController@checkCookie')->middleware('check.cookie');
 
 
 

@@ -1,6 +1,9 @@
 @extends('layouts.bst')
 @section('content')
+
    <h1 align="center" style="color:red;">Welcome back {{$name}}</h1>
+   <a href="/users/cart">进入购物车</a>
+   <a href="/users/quit" style="align:right">退出</a>
 <table class="table table-striped">
     <tr>
         <td>account</td>

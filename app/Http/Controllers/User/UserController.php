@@ -101,20 +101,22 @@ class UserController extends Controller
 			setcookie('token',$token,time()+86400,'/','',false,true);
 
 			$request->session()->put('u_token',$token);
+			$request->session()->put('uid',$info->uid);
 			echo 'Login successful';
-			header('refresh:0.2;/users/list');
+			header('refresh:0.2;/goods/list');
 		}
 			//header('refresh:0.2;/users/reg');
 		}
 	public function list(Request $request){
-		$token=$_COOKIE['token'];
-		$uid=$_COOKIE['uid'];
-		if($token != $request->session()->get('u_token')){
+		if(empty(setcookie('token'))){
+			header('refresh:1;/login');
+			echo 'Please log in';
+		}else if(setcookie('token') != $request->session()->get('u_token')){
 			header('refresh:1;/login');
 			echo 'Please log in';
 		}else{
 			$where=[
-				'uid'=>$uid
+				'uid'=>$_COOKIE['uid']
 			];
 			$info=UserModel::where($where)->first();
 			$list=UserModel::all();
@@ -124,6 +126,11 @@ class UserController extends Controller
 			];
 			return view('users.list',$data);
 		}
+
+	}
+	public function quit(){
+		setcookie('uid','',time()-1);
+		header("refresh:0;url=/login");
 
 	}
 
