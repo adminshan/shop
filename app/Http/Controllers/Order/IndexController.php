@@ -8,6 +8,7 @@ use App\Model\OrderModel;
 use App\Model\GoodsModel;
 use App\Model\UserModel;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 
 class indexController extends Controller
