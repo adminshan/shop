@@ -119,4 +119,10 @@ class indexController extends Controller
             echo "支付失败";
         }
     }
+    public function test(){
+        $url="http://www.order.com";
+        $client=new Client(['base_uri'=>$url,'timeout'=>2.0,]);
+        $response=$client->request('GET','/order.php');
+        echo $response->getBody();
+    }
 }

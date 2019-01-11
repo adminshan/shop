@@ -71,6 +71,8 @@ Route::any('/order/add/{id}','Order\IndexController@add')->middleware('check.log
 Route::any('/order/list','Order\IndexController@list')->middleware('check.login');
 Route::any('/order/detail/{order_sn}','Order\IndexController@detail')->middleware('check.login');
 Route::any('/order/del/{order_sn}','Order\IndexController@del')->middleware('check.login');
+
+Route::any('/order/order','Order\IndexController@test');
 //支付
 Route::any('/order/pay/{order_sn}','Order\IndexController@pay')->middleware('check.login');
 //退出
