@@ -17,7 +17,7 @@
                 <td>{{$v->order_amount / 100}}</td>
                 <td>{{date("Y-m-d H:i:s",$v ->add_time)}}</td>
                 <td>
-                    @if($v->status==1)
+                     @if($v->status==1)
                         未支付
                      @elseif($v->status==2)
                         已取消
@@ -25,8 +25,19 @@
                         已支付
                     @endif
                 </td>
-                <td><a href="/order/pay/{{$v->order_sn}}">支付</a>|<a href="/order/detail/{{$v->order_sn}}">查看详情</a>|<a
-                            href="/order/del/{{$v->order_sn}}">取消</a></td>
+                <td>
+                    @if($v->status==1)
+                        <a href="/order/pay/{{$v->order_sn}}">支付</a>|
+                        <a href="/order/detail/{{$v->order_sn}}">查看详情</a>
+                        <a href="/order/del/{{$v->order_sn}}">取消</a>
+                    @elseif($v->status==2)
+                        <a href="/order/detail/{{$v->order_sn}}">查看详情</a>
+                    @elseif($v->status==3)
+                        已支付|
+                        <a href="/order/detail/{{$v->order_sn}}">查看详情</a>
+                        |取消
+                    @endif
+                </td>
             </tr>
 
         @endforeach

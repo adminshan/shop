@@ -6,6 +6,7 @@ use App\Model\CartModel;
 use App\Model\DetailModel;
 use App\Model\OrderModel;
 use App\Model\GoodsModel;
+use App\Model\UserModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -58,6 +59,7 @@ class indexController extends Controller
     public function list(){
         $list=OrderModel::all();
         $data=[
+            'uid'=>session('uid'),
             'list'=>$list
         ];
         return view("order.list",$data);
@@ -65,8 +67,10 @@ class indexController extends Controller
     public function detail($order_sn){
 
         $list=DetailModel::where(['order_sn'=>$order_sn])->first();
+        $status=OrderModel::where(['order_sn'=>$order_sn])->value('status');
         $data=[
-            'list'=>$list
+            'list'=>$list,
+            'status'=>$status
         ];
         return view('order.detail',$data);
     }
@@ -86,7 +90,6 @@ class indexController extends Controller
                 'store'=>$store_num
             ];
             GoodsModel::where(['goods_id'=>$goods_id])->update($dataWhere);
-            DetailModel::where(['order_sn'=>$order_sn])->delete();
             header("refresh:2;/order/list");
         }else{
             echo "取消失败";
@@ -99,6 +102,18 @@ class indexController extends Controller
         $res=OrderModel::where(['order_sn'=>$order_sn])->update($data);
         if($res){
             echo "支付成功";
+            $score=OrderModel::where(['order_sn'=>$order_sn])->value('order_amount');
+            $user_score=UserModel::where(['uid'=>session('uid')])->value('score');
+            if(empty($user_score)){
+                $data=[
+                    'score'=>$score
+                ];
+            }else{
+                $data=[
+                    'score'=>$score+$user_score
+                ];
+            }
+            UserModel::where(['uid'=>session('uid')])->update($data);
             header("refresh:2;/order/list");
         }else{
             echo "支付失败";

@@ -30,8 +30,12 @@
         <tr>
             <td>操作</td>
             <td>
-                <button class="btn btn-danger"><a href="/order/pay/{{$list->order_sn}}" style="text-decoration: none; color: #ffffff;">去付款</a></button>
-                <button class="btn btn-danger"><a href="/order/list" style="text-decoration: none; color: #ffffff;">返回</a></button>
+                @if($status==1)
+                    <button class="btn btn-danger"><a href="/order/pay/{{$list->order_sn}}" style="text-decoration: none; color: #ffffff;">去付款</a></button>
+                    <button class="btn btn-danger"><a href="/order/list" style="text-decoration: none; color: #ffffff;">返回</a></button>
+                @elseif($status==3||$status==2)
+                    <button class="btn btn-danger"><a href="/order/list" style="text-decoration: none; color: #ffffff;">返回</a></button>
+                @endif
             </td>
         </tr>
 
