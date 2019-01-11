@@ -70,7 +70,7 @@ class UserController extends Controller
 			];
 			$uid=UserModel::insertGetId($data);
 			if($uid){
-				setcookie('uid',$uid,time()+86400,'/','shop.lening.com',false,true);
+				setcookie('uid',$uid,time()+86400,'/','',false,true);
 				echo 'Registered successfully';
 				header('refresh:1;/login');
 			}else{
