@@ -121,7 +121,7 @@ class indexController extends Controller
         }
     }
     public function test(){
-        $url="http://ordershan.com";
+        $url="http://www.ordershan.com";
         $client=new Client(['base_uri'=>$url,'timeout'=>2.0,]);
         $response=$client->request('GET','/index.php');
         echo $response->getBody();
