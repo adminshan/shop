@@ -88,8 +88,6 @@ class AlipayController extends Controller
         $sign = base64_encode($sign);
         return $sign;
     }
-
-
     public function getSignContent($params) {
         ksort($params);
         $stringToBeSigned = "";

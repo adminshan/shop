@@ -20,7 +20,6 @@ class IndexController extends Controller
 
         //调起支付宝支付
 
-
         //支付成功 修改支付时间
         OrderModel::where(['oid'=>$oid])->update(['pay_time'=>time(),'pay_amount'=>rand(1111,9999),'is_pay'=>1]);
 
