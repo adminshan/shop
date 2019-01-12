@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Pay;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 
-class PayController extends Controller
+class AlipayController extends Controller
 {
     public $app_id = '2016092500593666';
     public $gate_way = 'https://openapi.alipaydev.com/gateway.do';
@@ -30,7 +29,10 @@ class PayController extends Controller
 
         $response = $client->request('GET', '/order.php');
         echo $response->getBody();
+
+
     }
+
 
     public function test()
     {
@@ -65,9 +67,12 @@ class PayController extends Controller
         $url = $this->gate_way . $url;
         header("Location:".$url);
     }
+
+
     public function rsaSign($params) {
         return $this->sign($this->getSignContent($params));
     }
+
     protected function sign($data) {
 
         $priKey = file_get_contents($this->rsaPrivateKeyFilePath);
@@ -83,6 +88,7 @@ class PayController extends Controller
         $sign = base64_encode($sign);
         return $sign;
     }
+
 
     public function getSignContent($params) {
         ksort($params);
@@ -101,9 +107,11 @@ class PayController extends Controller
                 $i++;
             }
         }
+
         unset ($k, $v);
         return $stringToBeSigned;
     }
+
     protected function checkEmpty($value) {
         if (!isset($value))
             return true;
@@ -114,6 +122,8 @@ class PayController extends Controller
 
         return false;
     }
+
+
     /**
      * 转换字符集编码
      * @param $data
@@ -121,12 +131,15 @@ class PayController extends Controller
      * @return string
      */
     function characet($data, $targetCharset) {
+
         if (!empty($data)) {
             $fileType = 'UTF-8';
             if (strcasecmp($fileType, $targetCharset) != 0) {
                 $data = mb_convert_encoding($data, $targetCharset, $fileType);
             }
         }
+
+
         return $data;
     }
 }
