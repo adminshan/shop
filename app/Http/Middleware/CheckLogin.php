@@ -26,10 +26,6 @@ class CheckLogin
                     'url'   => url('/users/login')
                 ]);
                 die;
-
-//            header('Refresh:1;url=/login');
-//            echo 'Please log in';
-//            exit;
         }
         return $next($request);
     }
