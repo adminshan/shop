@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Pay;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\OrderModel;
 
 class IndexController extends Controller
 {
     public function order($oid){
         //查询订单
-        $order_info = OrderModel::where(['oid'=>$oid])->first();
+        $order_info = OrderModel::where(['order_id'=>$oid])->first();
         if(!$order_info){
             die("订单 ".$oid. "不存在！");
         }
@@ -21,11 +22,11 @@ class IndexController extends Controller
         //调起支付宝支付
 
         //支付成功 修改支付时间
-        OrderModel::where(['oid'=>$oid])->update(['pay_time'=>time(),'pay_amount'=>rand(1111,9999),'is_pay'=>1]);
+        OrderModel::where(['order_id'=>$oid])->update(['pay_time'=>time(),'pay_amount'=>rand(1111,9999),'status'=>3]);
 
         //增加消费积分 ...
 
-        header('Refresh:2;url=/user/center');
+        header('Refresh:2;url=/order/list');
         echo '支付成功，正在跳转';
 
     }

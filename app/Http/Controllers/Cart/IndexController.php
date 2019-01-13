@@ -70,16 +70,16 @@ class IndexController extends Controller
             $res=CartModel::insertGetId($data);
         }
         //var_dump($res);exit;
-        if(!$res){
+        if($res){
             $response=[
-                'error'=>5002,
-                'msg'=>'添加失败，请重试',
+                'error'=>0,
+                'msg'=>'添加成功',
             ];
             return $response;
         }else{
             $response=[
-                'error'=>0,
-                'msg'=>'添加成功',
+                'error'=>5002,
+                'msg'=>'添加失败，请重试',
             ];
             return $response;
         }

@@ -75,7 +75,6 @@ Route::get('/order/order','Order\IndexController@test');
 //支付
 Route::any('/order/pay/{order_sn}','Order\IndexController@pay')->middleware('check.login');
 Route::get('/pay/alipay/test','Pay\AlipayController@test');         //测试
-Route::get('/pay/{oid}','Pay\IndexController@order')->middleware('check.login.token');         //订单支付
 Route::post('/pay/alipay/notify','Pay\AlipayController@notify');
 //退出
 Route::get('/users/quit','User\UserController@quit');
