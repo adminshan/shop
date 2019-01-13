@@ -15,7 +15,7 @@ class CheckLogin
      */
     public function handle($request, Closure $next)
     {
-        if(empty($_COOKIE['uid'])){
+        if(empty(session('uid'))){
             header('Refresh:2;url=/login');
             echo '没有此用户，请确定';echo '</br>';
             exit;
@@ -23,13 +23,9 @@ class CheckLogin
 
                 echo json_encode([
                     'error' => 301,
-                    'url'   => url('/users/login')
+                    'url'   => url('users/login')
                 ]);
                 die;
-
-//            header('Refresh:1;url=/login');
-//            echo 'Please log in';
-//            exit;
         }
         return $next($request);
     }

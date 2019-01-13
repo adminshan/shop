@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 
 class AlipayController extends Controller
 {
-    public $app_id = '2016092500593666';
+    public $app_id = '2016092200572085';
     public $gate_way = 'https://openapi.alipaydev.com/gateway.do';
-    public $notify_url = 'http://shop.comcto.com/pay/alipay/notify';
+    public $notify_url = 'http://wang.tactshan.com/pay/alipay/notify';
     public $rsaPrivateKeyFilePath = './key/priv.key';
 
 

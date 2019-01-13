@@ -71,12 +71,11 @@ Route::any('/order/add/{id}','Order\IndexController@add')->middleware('check.log
 Route::any('/order/list','Order\IndexController@list')->middleware('check.login');
 Route::any('/order/detail/{order_sn}','Order\IndexController@detail')->middleware('check.login');
 Route::any('/order/del/{order_sn}','Order\IndexController@del')->middleware('check.login');
-
 Route::get('/order/order','Order\IndexController@test');
 //支付
 Route::any('/order/pay/{order_sn}','Order\IndexController@pay')->middleware('check.login');
 Route::get('/pay/alipay/test','Pay\AlipayController@test');         //测试
-Route::get('/pay/o/{oid}','Pay\IndexController@order')->middleware('check.login.token');         //订单支付
+Route::get('/pay/{oid}','Pay\IndexController@order')->middleware('check.login.token');         //订单支付
 Route::post('/pay/alipay/notify','Pay\AlipayController@notify');
 //退出
 Route::get('/users/quit','User\UserController@quit');

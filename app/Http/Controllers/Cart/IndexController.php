@@ -11,6 +11,7 @@ class IndexController extends Controller
 {
     public function index(Request $request){
         $uid = session()->get('uid');
+        //echo $uid;exit;
         $cart_goods = CartModel::where(['uid'=>$uid])->get()->toArray();
         if(empty($cart_goods)){
             die("购物车是空的");
@@ -68,6 +69,7 @@ class IndexController extends Controller
             ];
             $res=CartModel::insertGetId($data);
         }
+        //var_dump($res);exit;
         if(!$res){
             $response=[
                 'error'=>5002,

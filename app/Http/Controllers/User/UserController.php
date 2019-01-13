@@ -90,11 +90,13 @@ class UserController extends Controller
 			'name'=>$name
 		];
 		$info=UserModel::where($data)->first();
-		$pwd2=password_verify($pwd,$info->pwd);
 		if(empty($info)){
-			echo 'Login failed';
-		}else if($pwd2===false){
 			echo 'Wrong account or password';
+			header('refresh:0.2;/login');
+		}else if(password_verify($pwd,$info->pwd)===false){
+			echo 'Wrong account or password';
+			header('refresh:0.2;/login');
+
 		}else {
 			$token = substr(md5(time().mt_rand(1,99999)),10,10);
 			setcookie('uid',$info->uid,time()+86400,'/','',false,true);
@@ -109,11 +111,11 @@ class UserController extends Controller
 		}
 	public function list(Request $request){
 		if(empty(setcookie('token'))){
-			header('refresh:1;/login');
 			echo 'Please log in';
+			header('refresh:1;/login');
 		}else if(setcookie('token') != $request->session()->get('u_token')){
-			header('refresh:1;/login');
 			echo 'Please log in';
+			header('refresh:1;/login');
 		}else{
 			$where=[
 				'uid'=>$_COOKIE['uid']
